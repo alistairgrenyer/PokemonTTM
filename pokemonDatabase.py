@@ -22,7 +22,8 @@ def createTable(conn: sqlite3.Connection):
             "Artwork"	TEXT,
             "Attack"	INTEGER,
             "Defence"	INTEGER,
-            "Type"	TEXT,
+            "Type1"	TEXT,
+            "Type2"	TEXT
             PRIMARY KEY("Name")
             );
             '''
