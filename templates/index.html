@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='./styles.css') }}" rel="stylesheet" type="text/css" />
+    
+
+    <title>Pokedex</title>
+</head>
+<body>
+    <div class="center">
+        <img class = "banner main" src="/static/banner.jpg" style="width:500px;" alt="Pokebanner"><br/><br>
+        <button class="btn btn-primary" href="/downloadPokemon" type="button">Download Pokemon List</button><br>
+
+        <form class= "center" action="/action_page.php">
+            <label for="pokemon">Choose a Pokemon:</label>
+            <select class="form-control" name="pokemonList">
+                {% for location in loc_dict %}
+                    <option value={{loc_dict[location]}}>{{location}}</option>
+                {% endfor %}
+            </select>
+            <input name="pokemonList" type="submit" value="Submit">
+        </form>
+    </div>
+
+
+</body>
+</html>
