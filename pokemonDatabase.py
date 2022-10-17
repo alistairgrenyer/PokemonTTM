@@ -58,13 +58,13 @@ def findPokemonFromName(conn: sqlite3.Connection, pokemonName: str) -> dict:
 def addPokemonToDatabase(conn: sqlite3.Connection, pokemonData: list):
     for pokemon in pokemonData:
         try:
-            bookData = f'''
+            pokemonInsertSql = f'''
                     INSERT INTO PokemonDatabase
                     (Name, Artwork, Attack, Defence, Type1, Type2)
                     VALUES ('{pokemon["Name"]}', '{pokemon["Artwork"]}', 
                     '{pokemon["Attack"]}', '{pokemon["Defence"]}', 
                     '{pokemon["Type1"]}', '{pokemon["Type2"]}')
                     '''
-            commitToDatabase(conn, bookData)
+            commitToDatabase(conn, pokemonInsertSql)
         except KeyError as e:
             logging.info(e)
