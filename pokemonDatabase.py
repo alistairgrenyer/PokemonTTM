@@ -1,8 +1,10 @@
 import sqlite3
 import pandas as pd
+
+import logs
 import logging
 
-logging.basicConfig(filename='pokemonDatabase.log', filemode='w', level=logging.DEBUG)
+logger = logging.getLogger("logs.pokemonDatabase")
 
 
 def databaseConnect() -> sqlite3.Connection:
@@ -10,7 +12,7 @@ def databaseConnect() -> sqlite3.Connection:
         conn = sqlite3.connect('Pokemon.db')
         return conn
     except KeyError as e:
-        logging.info(e)
+        logger.error(e)
 
 
 def createTable(conn: sqlite3.Connection):
@@ -30,7 +32,7 @@ def createTable(conn: sqlite3.Connection):
         cursor.execute(createPokemonDatabase)
         conn.commit()
     except sqlite3.OperationalError as e:
-        logging.info(e)
+        logger.error(e)
 
 
 def commitToDatabase(conn: sqlite3.Connection, command: str) -> sqlite3.Connection.cursor:
@@ -39,7 +41,7 @@ def commitToDatabase(conn: sqlite3.Connection, command: str) -> sqlite3.Connecti
         cursor.execute(command)
         conn.commit()
     except sqlite3.IntegrityError as e:
-        logging.info(e)
+        logger.error(e)
     return cursor
 
 
@@ -67,4 +69,4 @@ def addPokemonToDatabase(conn: sqlite3.Connection, pokemonData: list):
                     '''
             commitToDatabase(conn, pokemonInsertSql)
         except KeyError as e:
-            logging.info(e)
+            logger.error(e)
