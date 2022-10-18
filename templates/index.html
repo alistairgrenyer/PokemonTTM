@@ -5,23 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', filename='./styles.css') }}" rel="stylesheet" type="text/css" />
-    
+    <script src="pokemon.js"></script>
 
     <title>Pokedex</title>
 </head>
 <body>
-    <div class="center">
-        <img class = "banner main" src="/static/banner.jpg" style="width:500px;" alt="Pokebanner"><br/><br>
-        <button class="btn btn-primary" href="/downloadPokemon" type="button">Download Pokemon List</button><br>
+    <div class="container">
+        <img class = "banner- main" src="/static/banner.jpg" style="width:500px;" alt="Pokebanner"><br/><br>
 
-        <form class= "center" action="/action_page.php">
+        <p class="center" id="download">(No Pokemon Downloaded)</p><br>
+        <button class="btn btn-primary" href="/downloadPokemon" type="button" onclick="download()">Download Pokemon List</button><br><br>
+            {% if pokemonList != [] %}
+                <script>document.getElementById("download").innerHTML = "Pokemon Downloaded!"</script>
+            {% endif %}
+
+        <form class= "center" action="/pokemonCard">
             <label for="pokemon">Choose a Pokemon:</label>
             <select class="form-control" name="pokemonList">
-                {% for location in loc_dict %}
-                    <option value={{loc_dict[location]}}>{{location}}</option>
+                {% for pokemon in pokemonList %}
+                    <option value={{pokemon}}>{{pokemon}}</option>
                 {% endfor %}
             </select>
-            <input name="pokemonList" type="submit" value="Submit">
+            <input type="submit" value="Submit">
         </form>
     </div>
 

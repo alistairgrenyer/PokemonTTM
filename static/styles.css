@@ -1,18 +1,14 @@
 h1 {
     color: blue;
 }
-.btn {
-  margin: 0;
-  position: absolute;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+.container {
+  text-align: center;
 }
 .center {
     margin: auto;
     width: 50%;
 }
-.download {
+/* .download {
     border: none;
     color: white;
     padding: 16px 32px;
@@ -29,11 +25,11 @@ h1 {
     background-color: white; 
     color: black; 
     border: 2px solid #4CAF50;
-  }
+  } */
   
-  .download:hover {
+  /* .download:hover {
     background-color: #4CAF50;
     color: white;
-  }
+  } */
 
 

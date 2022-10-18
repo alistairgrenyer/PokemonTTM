@@ -3,24 +3,23 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+# Creates route (url)
 @app.route("/")
-
 def main():
     # Get list of pokemon from database.
-    return render_template("index.html", #downloaded message)
+    pokemonList = ["Poke1"]
+    return render_template("index.html", pokemonList=pokemonList)
 
 @app.route("/downloadPokemon")
 def downloadPokemonData():
-    # download data (Isaac)
     # downloaded = downloadDB.downloadPokemonData()
-    # if downloaded == True:
-    # If downloaded add 'downloaded msg'
-    # If not, not.
-    # return main()
+    return main()
 
-@app.route("/pokemonCard/<pokemonName>")
-def produceCard(pokemonName):
+@app.route("/pokemonCard")
+def produceCard():
+    args=request.args
     # download data (Isaac)
+    print(args["pokemonList"])
     return render_template("pokemonCard.html", pokemonCard=["Poke1", "Poke2", "Poke3"])
 
 if __name__ == '__main__':
