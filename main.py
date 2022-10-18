@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/")
 def main():
     # Get list of pokemon from database.
-    pokemonList = ["Poke1"]
+    pokemonList = []
     return render_template("index.html", pokemonList=pokemonList)
 
 @app.route("/downloadPokemon")
