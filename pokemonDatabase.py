@@ -35,19 +35,22 @@ def createTable():
     conn.close()
 
 
-def commitToDatabase(conn: sqlite3.Connection, command: str) -> sqlite3.Connection.cursor:
+def commitToDatabase(command: str) -> sqlite3.Connection.cursor:
     commitToDatabaseLogs = logs.Logger()
+    conn = databaseConnect()
     cursor = conn.cursor()
     try:
         cursor.execute(command)
         conn.commit()
     except sqlite3.IntegrityError as e:
         commitToDatabaseLogs.logger.error(e)
+    conn.close()
     return cursor
 
 
-def findPokemonFromName(conn: sqlite3.Connection, pokemonName: str) -> dict:
+def findPokemonFromName(pokemonName: str) -> dict:
     findPokemonFromNameLogs = logs.Logger()
+    conn = databaseConnect()
     selectData = f'''
         SELECT * FROM PokemonDatabase
         WHERE Name = "{pokemonName}"
@@ -59,10 +62,11 @@ def findPokemonFromName(conn: sqlite3.Connection, pokemonName: str) -> dict:
     pokemon = {"Name": pokemonNameDF["Name"][0], "Artwork": pokemonNameDF["Artwork"][0],
                "Attack": pokemonNameDF["Attack"][0], "Defence": pokemonNameDF["Defence"][0],
                "Type1": pokemonNameDF["Type1"][0], "Type2": pokemonNameDF["Type2"][0]}
+    conn.close()
     return pokemon
 
 
-def addPokemonToDatabase(conn: sqlite3.Connection, pokemonData: list):
+def addPokemonToDatabase(pokemonData: list):
     addPokemonToDatabaseLogs = logs.Logger()
     for pokemon in pokemonData:
         try:
@@ -73,13 +77,14 @@ def addPokemonToDatabase(conn: sqlite3.Connection, pokemonData: list):
                     '{pokemon["Attack"]}', '{pokemon["Defence"]}', 
                     '{pokemon["Type1"]}', '{pokemon["Type2"]}')
                     '''
-            commitToDatabase(conn, pokemonInsertSql)
+            commitToDatabase(pokemonInsertSql)
         except Exception as e:
             addPokemonToDatabaseLogs.logger.error(e)
 
 
-def findAllPokemon(conn: sqlite3.Connection) -> list:
+def findAllPokemon() -> list:
     findAllPokemonLogs = logs.Logger()
+    conn = databaseConnect()
     selectData = f'''
         SELECT * FROM PokemonDatabase
         '''
@@ -95,4 +100,5 @@ def findAllPokemon(conn: sqlite3.Connection) -> list:
             allPokemonList.append(pokemon)
         except Exception as e:
             findAllPokemonLogs.logger.error(e)
+    conn.close()
     return allPokemonList
