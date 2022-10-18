@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-# import downloadDB
+import downloadDB
 import pokemonDatabase
 
 app = Flask(__name__)
@@ -16,15 +16,26 @@ def main():
 
 @app.route("/downloadPokemon")
 def downloadPokemonData():
-    # downloaded = downloadDB.downloadPokemonData()
-    return main()
+    # true/false
+  downloadSuccess = downloadDB.downloadPokemonData()
+  return main(), downloadSuccess
 
 @app.route("/pokemonCard")
 def produceCard():
-    args=request.args
-    # download data (Isaac)
-    print(args["pokemonList"])
-    return render_template("pokemonCard.html", pokemonCard=["Poke1", "Poke2", "Poke3"])
+  args=request.args
+    # 
+  conn = pokemonDatabase.databaseConnect()
+  pokemonData = pokemonDatabase.findPokemonFromName(conn, args)
+  conn.close()
+  pokemonName = pokemonData["Name"]
+  pokemonArtwork = pokemonData["Artwork"]
+  pokemonAttack = pokemonData["Attack"]
+  pokemonDefence = pokemonData["Defence"]
+  pokemonType1 = pokemonData["Type1"]
+  pokemonType2 = pokemonData["Type2"]
+    # 
+  return render_template("pokemonCard.html", pokemonCardName=pokemonName, pokemonArtwork=pokemonArtwork,
+  )
 
 if __name__ == '__main__':
     app.run()
