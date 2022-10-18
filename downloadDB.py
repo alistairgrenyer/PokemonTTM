@@ -4,7 +4,7 @@ import logs
 import logging
 import pokemonDatabase
 
-logger = logging.getLogger("logs.<nameOfFile>")
+logger = logging.getLogger("logs.downloadDB")
 
 def downloadPokemonData() -> bool:
     POKEMONLIST_URL = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151"
