@@ -70,3 +70,17 @@ def addPokemonToDatabase(conn: sqlite3.Connection, pokemonData: list):
             commitToDatabase(conn, pokemonInsertSql)
         except KeyError as e:
             logger.error(e)
+
+
+def findAllPokemon(conn: sqlite3.Connection) -> list:
+    selectData = f'''
+        SELECT * FROM PokemonDatabase
+        '''
+    allPokemonDF = pd.read_sql_query(selectData, conn)
+    allPokemonList = []
+    for row in allPokemonDF.itertuples():
+        pokemon = {"Name": row.Name, "Artwork": row.Artwork,
+                   "Attack": row.Attack, "Defence": row.Defence,
+                   "Type1": row.Type1, "Type2": row.Type2}
+        allPokemonList.append(pokemon)
+    return allPokemonList
