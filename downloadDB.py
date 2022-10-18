@@ -1,11 +1,12 @@
 import requests
 import json
+import logs
 import logging
 import pokemonDatabase
 
-def downloadPokemonData() -> bool:
-    logging.basicConfig(filename="pokemonDownload.log", filemode="w", level=logging.DEBUG)
+logger = logging.getLogger("logs.<nameOfFile>")
 
+def downloadPokemonData() -> bool:
     POKEMONLIST_URL = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151"
 
     try:
