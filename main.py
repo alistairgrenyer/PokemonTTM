@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 # import downloadDB
+import pokemonDatabase
 
 app = Flask(__name__)
 
@@ -7,8 +8,11 @@ app = Flask(__name__)
 @app.route("/")
 def main():
     # Get list of pokemon from database.
-    pokemonList = []
-    return render_template("index.html", pokemonList=pokemonList)
+  conn = pokemonDatabase.databaseConnect()
+  pokemonDictList = pokemonDatabase.findAllPokemon(conn)
+  conn.close()
+    #
+  return render_template("index.html", pokemon=pokemonDictList)
 
 @app.route("/downloadPokemon")
 def downloadPokemonData():
