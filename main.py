@@ -7,18 +7,21 @@ app = Flask(__name__)
 # Creates route (url)
 @app.route("/")
 def main():
+  return indexPage(None)
+
+def indexPage(downloadSuccess):
     # Get list of pokemon from database.
   conn = pokemonDatabase.databaseConnect()
   pokemonDictList = pokemonDatabase.findAllPokemon(conn)
   conn.close()
     #
-  return render_template("index.html", pokemon=pokemonDictList)
+  return render_template("index.html", pokemon=pokemonDictList, downloadSuccess=downloadSuccess)
 
 @app.route("/downloadPokemon")
 def downloadPokemonData():
     # true/false
   downloadSuccess = downloadDB.downloadPokemonData()
-  return main(), downloadSuccess
+  return indexPage(downloadSuccess)
 
 @app.route("/pokemonCard")
 def produceCard():
